@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Link to css  -->
+    <link rel="stylesheet" type="text/css" href="./Assets/css/style.css">
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <header class="site-heading">
+        <h1 class="main-h1">Weather Dashboard</h1>
+    </header>
+    <main>
+        <div class="container-fluid mainbackground">
+            <div class="row">
+                <div class="col-4">
+                    <div class="input-group mb-3">
+                        <nav class="navbar navbar-light bg-light">
+                            <span id="error"></span>
+                            <form class="form-inline">
+                                <input class="form-control mr-sm-2" id="cityname" type="search"
+                                    placeholder="Enter a city name" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" id="searchbtn"
+                                    type="submit">Search</button>
+                            </form>
+                        </nav>
+                    </div>
+                    <div class="list-group location-list">
+                    </div>
+                </div>
+                <div class="col-8 rightbackground">
+                    <div class="row">
+                        <div class="col-12 current">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <h1 class="citynamedisplay"> </h1> <img id="wicon" src="" alt="Weather icon">
+                                </div>
+                                <p><strong>Temperatrue:</strong> <span class="temp"></span> </p>
+                                <p><strong>Humidity:</strong> <span class="humidity"></span></p>
+                                <p><strong>Wind Speed:</strong> <span class="wind"></span></p>
+                                <p><strong>UV index:</strong> <span class="uvindex"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row fiveday">
+                        <h1> 5-Day Forecast: </h1>
+                        <div class="row display">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./Assets/js/script.js"></script>
+</body>
+</html>
