@@ -39,7 +39,7 @@ $(document).ready(function () {
                     let iconcode = response.weather[0].icon;
                     let iconlink = "https://openweathermap.org/img/w/" + iconcode + ".png";
                     $(".citynamedisplay").text(response.name + " " + convertUnix(response.dt));
-                    $('#wicon').attr('src', iconlink);
+                    $('#wicon').attr('src', iconlink).remove("hide");
                     $(".temp").text(response.main.temp + " °C");
                     $(".humidity").text(response.main.humidity + " %");
                     $(".wind").text(response.wind.speed + " KM/H");
@@ -59,7 +59,8 @@ $(document).ready(function () {
                         for (let i = 0; i < fiveDayWeather.length; i = i + 1) {
                             let newDiv = $("<div>");
                             newDiv.addClass("col forecast");
-                            let date = $("<h3>").text("Date: "+ fiveDayWeather[i] + convertUnix(response.dt));
+                            let date = $("<h3>").text(new Date(fiveDayWeather[i].dt).toLocaleDateString());
+                            console.log(fiveDayWeather);
                             secondIcon = fiveDayWeather[i].weather[0].icon;
                             let secondIconlink = "https://openweathermap.org/img/w/" + secondIcon + ".png";
                             let icon = $("<img>").attr('src', secondIconlink);
@@ -110,9 +111,11 @@ let createRow = function () {
 
 
     // click on a city in the search history & take user back to city information
-  
+let searchHistoryCity = function() {
 
-  
+}
+
+
 
     //clear search history
-    
+

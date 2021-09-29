@@ -11,9 +11,10 @@
     border-radius: 5px;
 }
 
-/* img {
+img {
     display: none;
-} */
+    margin-left: 10px;
+}
 
 .main-h1 {
     font-size: 35px;
@@ -38,8 +39,12 @@
 }
 
 h3 {
-    font-size: 15px;
+    font-size: 20px;
     margin-top: 10px;
+}
+
+p {
+    font-size: 15px;
 }
 
 .fiveday {
