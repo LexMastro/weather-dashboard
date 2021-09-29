@@ -3,7 +3,7 @@ function convertUnix(unix_timestamp) {
     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
     let date = new Date(unix_timestamp * 1000);
     // Hours part from the timestamp
-    let year = date.getFullYear();
+    let year = date.getUTCFullYear();
     // Minutes part from the timestamp
     let months = date.getMonth() + 1;
     // Seconds part from the timestamp
@@ -59,7 +59,7 @@ $(document).ready(function () {
                         for (let i = 0; i < fiveDayWeather.length; i = i + 1) {
                             let newDiv = $("<div>");
                             newDiv.addClass("col forecast");
-                            let date = $("<h3>").text(new Date(fiveDayWeather[i].dt).toLocaleDateString());
+                            let date = $("<h3>").text(new Date(fiveDayWeather[i].dt * 1000).toLocaleDateString());
                             console.log(fiveDayWeather);
                             secondIcon = fiveDayWeather[i].weather[0].icon;
                             let secondIconlink = "https://openweathermap.org/img/w/" + secondIcon + ".png";
@@ -107,7 +107,6 @@ let createRow = function () {
     button.attr("type", "button");
     $(".location-list").prepend(button);
 };
-
 
 
     // click on a city in the search history & take user back to city information
