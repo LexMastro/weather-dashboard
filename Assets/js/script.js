@@ -59,7 +59,7 @@ $(document).ready(function () {
                         for (let i = 0; i < fiveDayWeather.length; i = i + 1) {
                             let newDiv = $("<div>");
                             newDiv.addClass("col forecast");
-                            let date = $("<h3>").text("Date: "+ fiveDayWeather[i].dt_txt);
+                            let date = $("<h3>").text("Date: "+ fiveDayWeather[i] + convertUnix(response.dt));
                             secondIcon = fiveDayWeather[i].weather[0].icon;
                             let secondIconlink = "https://openweathermap.org/img/w/" + secondIcon + ".png";
                             let icon = $("<img>").attr('src', secondIconlink);
