@@ -1,39 +1,3 @@
-// const apiKey = "&appid=45bb91d664f0e678d9a99e88e2efe20e";
-
-// function getForecastData(latitude, longtitude) {
-//     const data = [];
-//     let URL = "https://api.openweathermap.org/data/2.5/onecall?appid=45bb91d664f0e678d9a99e88e2efe20e&lat=" + latitude + "&lon=" + longtitude;
-//     console.log(URL)
-//     $.ajax({
-//         url: URL,
-//         method: "GET",
-//         dataType: "json",
-//         success: function (response) {
-//             console.log(response);
-//           const daily = (response.daily);
-
-//           for (let i = 0; i < daily.length; i++) {
-//             const date = daily[i].dt;
-//             const wind = daily[i].wind_speed;
-//             const humidity = daily[i].humidity;
-//             const icon = "https://openweathermap.org/img/w/" + daily[i].weather[0].icon + ".png";
-//             const uv = daily[i].uvi;
-
-//             data.push({[date]: {wind, humidity, icon, uv}})
-            
-//           }
-           
-//         },
-//         error: function (response) {
-//             console.log(response);
-//         }
-        
-// })
-// return data }
-
-// const d = getForecastData(-33.8679, 151.2073);
-// console.log(d)
-
 function convertUnix(unix_timestamp) {
   // Create a new JavaScript Date object based on the timestamp
   // multiplied by 1000 so that the argument is in milliseconds, not seconds.
@@ -153,11 +117,17 @@ $(document).ready(function () {
         $(".temp").text(response.main.temp + " °C");
         $(".humidity").text(response.main.humidity + " %");
         $(".wind").text(response.wind.speed + " KM/H");
-        $(".uvindex").text(response.coord + " UV Index");
+        $("#uvindex").text(response.uvi + " UV Index");
         longtitude = response.coord.lon;
         latitude = response.coord.lat;
         console.log(response);
 
+
+
+
+
+
+        
         let secondIcon;
         // display weather forecast of 5 days
         let thirdqueryURL = "https://api.openweathermap.org/data/2.5/onecall?appid=45bb91d664f0e678d9a99e88e2efe20e&lat=" + latitude + "&lon=" + longtitude;
@@ -166,7 +136,7 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
 
-            let fiveDayWeather = response.daily.slice(-5);
+            let fiveDayWeather = response.daily.slice(0, 6);
             for (let i = 0; i < fiveDayWeather.length; i = i + 1) {
                 let newDiv = $("<div>");
                 newDiv.addClass("col forecast");
@@ -190,27 +160,33 @@ $(document).ready(function () {
         $.ajax({
             url: secondqueryURL,
             method: "GET",
-        }).then(function (response) {
 
-          if (response <= 2) {
+        }).then (function (response)  {
+          
+          let uvColour = $("#uvcolour").val();
+
+          if (uvColour <= 2) {
             // Display Green for favorable Uvi
-            document.getElementsByClassName("uvindex").style.backgroundColor = "green";
+            $("#uvindex").text(response.value);
+            $("#uvcolour").css("background-color", "green");
 
-          } if (response >= 3 && response < 6) {
-            // Display orange for morderate Uvi
-           
-            document.getElementsByClassName("uvindex").style.backgroundColor = "yellow";
+          } if (uvColour >= 3 && uvColour < 6) {
+            // Display yellow for favorable-morderate Uvi
+            
+            $("#uvcolour").css("background-color", "yellow");
          
-          } else if (response>= 6 && response< 8){
-            
-            document.getElementsByClassName("uvindex").style.backgroundColor = "orange";
+          } else if (uvColour >= 6 && uvColour < 8){
+             // Display yellow for morderate-high Uvi
+             console.log(uvColour)
+             $("#uvcolour").css("background-color", "orange");
            
-          } else if (response > 8) {
+          } else if (uvColour > 8) {
+             // Display yellow for High Uvi
             
-            document.getElementsByClassName("uvindex").style.backgroundColor = "red";
+             $("#uvcolour").css("background-color", "red");
             
           }
-            
+            console.log(response.value)
         });
       },
       error: function (error) {
