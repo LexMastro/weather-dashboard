@@ -16,7 +16,7 @@ function convertUnix(unix_timestamp) {
 
 function addToLocalStorage(searchTerm) {
   // get existing items in local storage
-  var searches = JSON.parse(localStorage.getItem("searches")) || [];
+  let searches = JSON.parse(localStorage.getItem("searches")) || [];
   // add this city & don't let 2 of the same name save twice in local storage
   searches.push(searchTerm.toLowerCase());
   // add all data to local storage
@@ -27,7 +27,7 @@ function addToLocalStorage(searchTerm) {
 
 function checkLocalStorage() {
   // get existing items in local storage
-  var searches = JSON.parse(localStorage.getItem("searches")) || [];
+  let searches = JSON.parse(localStorage.getItem("searches")) || [];
   if (searches.length > 0) {
     // if there is existing data in the list
     // just get the unique names
@@ -35,8 +35,9 @@ function checkLocalStorage() {
     for (let i = 0; i < uniqueSearches.length; i++) {
       // render the history dom elements
       createRow(uniqueSearches[i])
+    }
   }
-}}
+}
 
 // on page ready
 $(document).ready(function () {
@@ -57,38 +58,33 @@ $(document).ready(function () {
     queryData()
   })
 
-
-  
-  // Goal 2: in the create row function, make sure the text is nicely formatted
-  // css text-transform
-
   // user searches via input
   $('#searchbtn').click(function (event) {
-      event.preventDefault();
-      
-      // a new search has started, clear any error text
-      $("#error").empty();
+    event.preventDefault();
 
-      // get name of the city
-      cityName = $("#cityname").val();
+    // a new search has started, clear any error text
+    $("#error").empty();
 
-      // if the input isn't empty
-      if (cityName !== "") {
-        // clear current UI
-        $(".display").empty();
+    // get name of the city
+    cityName = $("#cityname").val();
 
-        // search for the city
-        queryData()
+    // if the input isn't empty
+    if (cityName !== "") {
+      // clear current UI
+      $(".display").empty();
 
-         // save search term to local storage
-         addToLocalStorage(cityName)
+      // search for the city
+      queryData()
 
-        // add search in history
-         createRow(cityName);
-      } else {
-        // user didn't enter a value
-        $("#error").html("Field cannot be empty");
-      }
+      // save search term to local storage
+      addToLocalStorage(cityName)
+
+      // add search in history
+      createRow(cityName);
+    } else {
+      // user didn't enter a value
+      $("#error").html("Field cannot be empty");
+    }
   })
 
   // remove local storages items if button clicked
@@ -103,12 +99,14 @@ $(document).ready(function () {
 
   // call weather api for data
   function queryData() {
+    // add api key & populate section with data
     const apiKey = "appid=45bb91d664f0e678d9a99e88e2efe20e"
     $.ajax({
       url: "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric" + "&" + apiKey,
       type: "GET",
       dataType: "json",
       success: function (response) {
+        // create sections in the div for data to populate into
         let iconcode = response.weather[0].icon;
         let iconlink = "https://openweathermap.org/img/w/" + iconcode + ".png";
         $(".citynamedisplay").text(response.name + " " + convertUnix(response.dt));
@@ -119,70 +117,68 @@ $(document).ready(function () {
         $("#uvindex").text(response.uvi + " UV Index");
         longtitude = response.coord.lon;
         latitude = response.coord.lat;
-        console.log(response);
 
-        
         let secondIcon;
         let thirdqueryURL = "https://api.openweathermap.org/data/2.5/onecall?appid=45bb91d664f0e678d9a99e88e2efe20e&lat=" + latitude + "&lon=" + longtitude;
         $.ajax({
-            url: thirdqueryURL,
-            method: "GET"
+          url: thirdqueryURL,
+          method: "GET"
         }).then(function (response) {
+          // only make 5 columns for the 5 day forecast & only grab the next 5 consecutive days
+          let fiveDayWeather = response.daily.slice(1, 6);
+          console.log(response.daily)
+          for (let i = 0; i < fiveDayWeather.length; i = i + 1) {
+            let newDiv = $("<div>");
+            newDiv.addClass("col forecast");
+            let date = $("<h3>").text(new Date(fiveDayWeather[i].dt * 1000).toDateString());
+            secondIcon = fiveDayWeather[i].weather[0].icon;
+            let secondIconlink = "https://openweathermap.org/img/w/" + secondIcon + ".png";
+            let icon = $("<img>").attr('src', secondIconlink).remove("hide");;
+            let temp = $("<p>").text("Temperature: " + (fiveDayWeather[i].temp.day - 273.15).toFixed(2) + " °C");
+            let wind = $("<p>").text("Wind Speed: " + fiveDayWeather[i].wind_speed + " KM/H");
+            let humidity = $("<p>").text("Humidity: " + fiveDayWeather[i].humidity + " %");
+            let uvindex = $("<p>").text("UV Index: " + fiveDayWeather[i].uvi);
 
-            let fiveDayWeather = response.daily.slice(1, 6);
-            console.log(response.daily)
-            for (let i = 0; i < fiveDayWeather.length; i = i + 1) {
-                let newDiv = $("<div>");
-                newDiv.addClass("col forecast");
-                let date = $("<h3>").text(new Date (fiveDayWeather[i].dt * 1000).toDateString());
-                secondIcon = fiveDayWeather[i].weather[0].icon;
-                let secondIconlink = "https://openweathermap.org/img/w/" + secondIcon + ".png";
-                let icon = $("<img>").attr('src', secondIconlink).remove("hide");;
-                let temp = $("<p>").text("Temperature: " + (fiveDayWeather[i].temp.day - 273.15).toFixed(2) + " °C");
-                let wind = $("<p>").text("Wind Speed: " + fiveDayWeather[i].wind_speed + " KM/H");
-                let humidity = $("<p>").text("Humidity: " + fiveDayWeather[i].humidity + " %");
-                let uvindex = $("<p>").text("UV Index: " + fiveDayWeather[i].uvi);
-
-                newDiv.append(date, icon, temp, humidity, wind, uvindex);
-                $(".display").append(newDiv);
-            };           
+            newDiv.append(date, icon, temp, humidity, wind, uvindex);
+            $(".display").append(newDiv);
+          };
         });
 
         // display uv index using longtitude and latitude
-        
         let secondqueryURL = "https://api.openweathermap.org/data/2.5/uvi?" + apiKey + "&lat=" + latitude + "&lon=" + longtitude;
         $.ajax({
-            url: secondqueryURL,
-            method: "GET",
+          url: secondqueryURL,
+          method: "GET",
 
-        }).then (function (response)  {
+        }).then(function (response) {
           $("#uvindex").text(response.value);
           $("#wicon").css("display", "block");
           if (response.value <= 2) {
             // Display Green for favorable Uvi
-           
+
             $("#uvindex").css("background-color", "green");
 
           } if (response.value >= 3 && response.value < 6) {
             // Display yellow for favorable-morderate Uvi
-           
+
             $("#uvindex").css("background-color", "yellow");
-         
-          } else if (response.value >= 6 && response.value < 8){
-             // Display yellow for morderate-high Uvi
-             console.log(response.value)
-             $("#uvindex").css("background-color", "orange");
-           
-          } else if (response.value > 8) {
-             // Display yellow for High Uvi
-            
-             $("#uvindex").css("background-color", "red");
-            
-          }
+
+          } else if (response.value >= 6 && response.value < 8) {
+            // Display yellow for morderate-high Uvi
             console.log(response.value)
+            $("#uvindex").css("background-color", "orange");
+
+          } else if (response.value > 8) {
+            // Display yellow for High Uvi
+
+            $("#uvindex").css("background-color", "red");
+
+          }
+          console.log(response.value)
         });
       },
       error: function (error) {
+        // if user types mistake
         $("#error").html("No city found");
       }
     });

@@ -15,12 +15,6 @@
     margin: 10px;
 }
 
-.search-history {
-    display: flex;
-    flex-direction: row;
-   align-items: center;
-}
-
 .btn, #clearSearch {
     height: 35px;
     display: inline-block;
@@ -78,6 +72,10 @@
     color: whitesmoke;
 }
 
+h2 {
+    font-size: 24px;
+}
+
 h3 {
     font-size: 15px;
     margin-top: 10px;
@@ -122,59 +120,4 @@ body {
     max-width: 65.5%;
 }
 
-@media screen and (max-width: 500px) {
-
-
-
-    .card1 {
-        padding-left: 26px
-    }
-
-}
-
-@media (min-width: 768px) {
-    .col-sm-5ths {
-        width: 20%;
-        float: left;
-    }
-}
-
-@media (max-width: 992px) {
-
-    .forecast {
-        max-width: 170px;
-    }
-    .col-md-5ths {
-        width: 20%;
-        float: left;
-    }
-}
-
-@media (max-width: 1200px) {
-    .forecast {
-        max-width: 170px;
-    }
-
-    nav {
-        width: 363px;
-    }
-    #cityname {
-        width: 300px;
-        margin: 5px;
-    }
-
-    .btn, #clearSearch {
-        margin: 5px;
-        width: 150px;
-    }
-
-    .form-inline {
-        flex-flow: column;
-    }
-
-    .col-lg-5ths {
-        width: 20%;
-        float: left;
-    }
-}
 
