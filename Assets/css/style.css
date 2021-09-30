@@ -15,6 +15,12 @@
     margin: 10px;
 }
 
+.search-history {
+    display: flex;
+    flex-direction: row;
+   align-items: center;
+}
+
 .btn, #clearSearch {
     height: 35px;
     display: inline-block;
