@@ -17,8 +17,8 @@ function convertUnix(unix_timestamp) {
 function addToLocalStorage(searchTerm) {
   // get existing items in local storage
   var searches = JSON.parse(localStorage.getItem("searches")) || [];
-  // add this city
-  searches.push(searchTerm)
+  // add this city & don't let 2 of the same name save twice in local storage
+  searches.push(searchTerm.toLowerCase());
   // add all data to local storage
   localStorage.setItem('searches', JSON.stringify(searches));
 
@@ -58,8 +58,7 @@ $(document).ready(function () {
   })
 
 
-  // string.toLowerCase()
-  // Goal: when adding to local storage, make sure Sydney and sydney are the same 'sydney'
+  
   // Goal 2: in the create row function, make sure the text is nicely formatted
   // css text-transform
 
@@ -122,28 +121,22 @@ $(document).ready(function () {
         latitude = response.coord.lat;
         console.log(response);
 
-
-
-
-
-
         
         let secondIcon;
-        // display weather forecast of 5 days
         let thirdqueryURL = "https://api.openweathermap.org/data/2.5/onecall?appid=45bb91d664f0e678d9a99e88e2efe20e&lat=" + latitude + "&lon=" + longtitude;
         $.ajax({
             url: thirdqueryURL,
             method: "GET"
         }).then(function (response) {
 
-            let fiveDayWeather = response.daily.slice(0, 6);
+            let fiveDayWeather = response.daily.slice(0, 5);
             for (let i = 0; i < fiveDayWeather.length; i = i + 1) {
                 let newDiv = $("<div>");
                 newDiv.addClass("col forecast");
                 let date = $("<h3>").text(new Date (fiveDayWeather[i].dt * 1000).toDateString());
                 secondIcon = fiveDayWeather[i].weather[0].icon;
                 let secondIconlink = "https://openweathermap.org/img/w/" + secondIcon + ".png";
-                let icon = $("<img>").attr('src', secondIconlink);
+                let icon = $("<img>").append('src', secondIconlink);
                 let temp = $("<p>").text("Temperature: " + (fiveDayWeather[i].temp.day - 273.15).toFixed(2) + " °C");
                 let wind = $("<p>").text("Wind Speed: " + fiveDayWeather[i].wind_speed + " KM/H");
                 let humidity = $("<p>").text("Humidity: " + fiveDayWeather[i].humidity + " %");
@@ -162,28 +155,27 @@ $(document).ready(function () {
             method: "GET",
 
         }).then (function (response)  {
-          
-          let uvColour = $("#uvcolour").val();
-
-          if (uvColour <= 2) {
+          $("#uvindex").text(response.value);
+          $("#wicon").css("display", "block");
+          if (response.value <= 2) {
             // Display Green for favorable Uvi
-            $("#uvindex").text(response.value);
-            $("#uvcolour").css("background-color", "green");
-
-          } if (uvColour >= 3 && uvColour < 6) {
-            // Display yellow for favorable-morderate Uvi
-            
-            $("#uvcolour").css("background-color", "yellow");
-         
-          } else if (uvColour >= 6 && uvColour < 8){
-             // Display yellow for morderate-high Uvi
-             console.log(uvColour)
-             $("#uvcolour").css("background-color", "orange");
            
-          } else if (uvColour > 8) {
+            $("#uvindex").css("background-color", "green");
+
+          } if (response.value >= 3 && response.value < 6) {
+            // Display yellow for favorable-morderate Uvi
+           
+            $("#uvindex").css("background-color", "yellow");
+         
+          } else if (response.value >= 6 && response.value < 8){
+             // Display yellow for morderate-high Uvi
+             console.log(response.value)
+             $("#uvindex").css("background-color", "orange");
+           
+          } else if (response.value > 8) {
              // Display yellow for High Uvi
             
-             $("#uvcolour").css("background-color", "red");
+             $("#uvindex").css("background-color", "red");
             
           }
             console.log(response.value)

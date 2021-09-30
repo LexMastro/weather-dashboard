@@ -11,6 +11,40 @@
     border-radius: 5px;
 }
 
+.form-inline {
+    margin: 10px;
+}
+
+.btn, #clearSearch {
+    height: 35px;
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid blue;
+    padding: 5px;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin: 0 5px 0 5px;
+}
+
+#clearSearch:hover {
+    background-color: rgb(246, 214, 166);
+}
+
+.btn:hover {
+    background-color: rgb(246, 214, 166);
+    border: 1px solid blue;
+    color: black;
+}
+
 img {
     display: none;
     margin-left: 10px;
@@ -25,9 +59,9 @@ img {
     margin-left: 0;
 }
 
-.uvindex {
-    padding: 5px;
-    color: ghostwhite;
+#uvindex {
+    padding: 10px;
+    color: black;
     border-radius: 5px;
 }
 
@@ -83,9 +117,13 @@ body {
 }
 
 @media screen and (max-width: 500px) {
+
+
+
     .card1 {
         padding-left: 26px
     }
+
 }
 
 @media (min-width: 768px) {
@@ -95,14 +133,39 @@ body {
     }
 }
 
-@media (min-width: 992px) {
+@media (max-width: 992px) {
+
+    .forecast {
+        max-width: 170px;
+    }
     .col-md-5ths {
         width: 20%;
         float: left;
     }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
+    .forecast {
+        max-width: 170px;
+    }
+
+    nav {
+        width: 363px;
+    }
+    #cityname {
+        width: 300px;
+        margin: 5px;
+    }
+
+    .btn, #clearSearch {
+        margin: 5px;
+        width: 150px;
+    }
+
+    .form-inline {
+        flex-flow: column;
+    }
+
     .col-lg-5ths {
         width: 20%;
         float: left;
