@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,11 +26,13 @@
                             <form class="form-inline">
                                 <input class="form-control mr-sm-2" id="cityname" type="search" placeholder="Enter a city name" aria-label="Search">
                                 <button class="btn btn-outline-success my-2 my-sm-0" id="searchbtn" type="submit">Search</button>
-                                <!-- <button class=" btn btn-primary" type="button" id="clear-history">Clear history</button> -->
                             </form>
+                            
                         </nav>
+                        <button id="clearSearch">Clear search</button>
                     </div>
-                    <div class="list-group location-list">
+                    <h2>Search History</h2>
+                    <div id="searches" class="list-group location-list">
                     </div>
                 </div>
                 <div class="col-8 rightbackground">
@@ -40,10 +43,10 @@
                                     <h1 class="citynamedisplay"> </h1>
                                     <img id="wicon" src="" alt="Weather icon" class="hide">
                                 </div>
-                                <p><strong>Temperatrue:</strong> <span class="temp"></span> </p>
-                                <p><strong>Humidity:</strong> <span class="humidity"></span></p>
-                                <p><strong>Wind Speed:</strong> <span class="wind"></span></p>
-                                <p><strong>UV index:</strong> <span class="uvindex"></span></p>
+                                <p class="main-p"><strong>Temperatrue:</strong> <span class="temp"></span> </p>
+                                <p class="main-p"><strong>Humidity:</strong> <span class="humidity"></span></p>
+                                <p class="main-p"><strong>Wind Speed:</strong> <span class="wind"></span></p>
+                                <p class="main-p"><strong>UV index:</strong> <span class="uvindex"></span></p>
                             </div>
                         </div>
                     </div>
@@ -58,6 +61,6 @@
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./Assets/js/script.js"></script>
+    <script src="./Assets/js/script2.js"></script>
 </body>
 </html>
