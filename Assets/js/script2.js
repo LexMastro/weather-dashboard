@@ -112,7 +112,7 @@ $(document).ready(function () {
         let iconcode = response.weather[0].icon;
         let iconlink = "https://openweathermap.org/img/w/" + iconcode + ".png";
         $(".citynamedisplay").text(response.name + " " + convertUnix(response.dt));
-        $('#wicon').attr('src', iconlink);
+        $('#wicon').attr('src', iconlink).remove("hide");
         $(".temp").text(response.main.temp + " °C");
         $(".humidity").text(response.main.humidity + " %");
         $(".wind").text(response.wind.speed + " KM/H");
@@ -136,7 +136,7 @@ $(document).ready(function () {
                 let date = $("<h3>").text(new Date (fiveDayWeather[i].dt * 1000).toDateString());
                 secondIcon = fiveDayWeather[i].weather[0].icon;
                 let secondIconlink = "https://openweathermap.org/img/w/" + secondIcon + ".png";
-                let icon = $("<img>").append('src', secondIconlink);
+                let icon = $("<img>").attr('src', secondIconlink).remove("hide");;
                 let temp = $("<p>").text("Temperature: " + (fiveDayWeather[i].temp.day - 273.15).toFixed(2) + " °C");
                 let wind = $("<p>").text("Wind Speed: " + fiveDayWeather[i].wind_speed + " KM/H");
                 let humidity = $("<p>").text("Humidity: " + fiveDayWeather[i].humidity + " %");
